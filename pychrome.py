@@ -8,7 +8,7 @@ from operator import getitem
 guilds = {}
 guilds_gvg = {}
 
-toFile = True
+toFile = False
 
 class EventHandler:
     def __init__(self, tab, world):
@@ -46,8 +46,6 @@ class EventHandler:
             pass
 
     def handleLoading(self, requestId, **kwargs):
-        makeMMRTable()
-
         try:
             body = self.tab.Network.getResponseBody(requestId=requestId)
             responses = json.loads(body.get('body'))
@@ -77,7 +75,15 @@ class EventHandler:
                     rankings = rd.get('rankings')
                     processClanProvinceRankings(self.lastMapOpened, rankings)
 
-
+def printProgress():
+    print(chr(27) + "[2J")
+    makeMMRTable()
+    print "---------------------"
+    print "   MMR Table maker   "
+    print "---------------------"
+    print "  GvG MAPS:", len(guilds_gvg),"/ 13"
+    print "  Guilds:", len(guilds)
+    print "---------------------"
 
 def processClanRankings(data):
     for guild in data:
@@ -86,6 +92,8 @@ def processClanRankings(data):
         name = guild["clan"]["name"]
         prestige_lvl = guild["level"] * 25
         guilds[_id] = {"_id" : _id, "prestige" : prestige, "prestige_lvl" : prestige_lvl, "name" : name}
+
+    printProgress()
 
 def processClanProvinceRankings(lastMapOpened, data):
     guilds_gvg[lastMapOpened] = {}
@@ -96,24 +104,26 @@ def processClanProvinceRankings(lastMapOpened, data):
 
         guilds_gvg[lastMapOpened][_id] = {"_id" : _id, "powerSum": powerSum}
 
+    printProgress()
+
 def makeMMRTable():
     totalGvGPRestige = {}
 
-    for key, age in guilds_gvg.items():
-        for key, guild in age.items():
-            _id = guild["_id"]
+    if len(guilds_gvg) >= 1 and len(guilds) > 0:
+        for key, age in guilds_gvg.items():
+            for key, guild in age.items():
+                _id = guild["_id"]
 
-            totalGvGPRestige[_id] = totalGvGPRestige.get(_id, 0) + guild["powerSum"]
+                totalGvGPRestige[_id] = totalGvGPRestige.get(_id, 0) + guild["powerSum"]
 
-    for key, guild in guilds.items():
-        guilds[key]["MMR"] = (guild["prestige"] - guild["prestige_lvl"] - totalGvGPRestige.get(guild["_id"], 0))/18
+        for key, guild in guilds.items():
+            guilds[key]["MMR"] = (guild["prestige"] - guild["prestige_lvl"] - totalGvGPRestige.get(guild["_id"], 0))/18
 
-    print(chr(27) + "[2J")
-    if len(guilds_gvg) >= 13:
-    #if len(guilds_gvg) >= 1:
+        
         res = OrderedDict(sorted(guilds.items(), key = lambda x: getitem(x[1], 'MMR'), reverse = True))
         
         if toFile == False:
+            print(chr(27) + "[2J")
             print "=== BEGINNING OF THE MMR TABLE ==="
             for key, item in res.items():
                 print item["MMR"], item["name"]
@@ -131,12 +141,7 @@ def makeMMRTable():
             f.write(r)
             f.close()
 
-            print file
-
-    print "-------"
-    print "GvG MAPS:", len(guilds_gvg),"/ 13"
-    print "Guilds:", len(guilds)
-    print "-------"
+            print "saved to", file
 
 def main():
     browser = pychrome.Browser(url='http://127.0.0.1:9222')
@@ -150,6 +155,7 @@ def main():
         world, domain = url[8:].split('.', 1)
 
         if 'forgeofempires.com/game' in url:
+            printProgress()
             eh = EventHandler(tab, world)
             tab.Network.responseReceived = eh.handleResponse
             tab.Network.loadingFinished = eh.handleLoading
