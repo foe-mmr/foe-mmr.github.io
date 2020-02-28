@@ -109,7 +109,7 @@ def processClanProvinceRankings(lastMapOpened, data):
 def makeMMRTable():
     totalGvGPRestige = {}
 
-    if len(guilds_gvg) >= 1 and len(guilds) > 0:
+    if len(guilds_gvg) >= 13 and len(guilds) > 0:
         for key, age in guilds_gvg.items():
             for key, guild in age.items():
                 _id = guild["_id"]
