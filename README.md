@@ -42,3 +42,5 @@ If everythings ok then you should see something like this in terminal:
 ```
 
 Now you need to do some clicking, click on every GvG map and its leaderbord. After that click on Global rankings guilds section and keep clicking throught pages until you reach desired guild count. You can keep track of your clicking progress in terminal. Once you have clicked on every GvG maps leaderboard and opened at least one page of guild global rankings MMR table will be created and printed to terminal where you can copy it.
+
+Thanks to dontwannaname from FOE beta forum for providing most of the code.
