@@ -131,10 +131,6 @@ def makeMMRTable():
 
         else:
             r = json.dumps(res, sort_keys=True)
-            #loaded_json = json.loads(r)
-
-            #with open('mmr_data.json', 'w') as json_file:
-            #    json.dump(loaded_json, json_file)
 
             file = "mmr_data.json"
             f = open(file, "w")
