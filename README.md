@@ -24,7 +24,7 @@ pip install pychrome
 ```
 google-chrome --headless --disable-gpu --remote-debugging-port=9222
 ```
-No other Chrome windows should be open before. Chrome window should be opened and in it open the FOE world for which you would like to create MMR table. Once game is done loading
+No other Chrome windows should be open before. Chrome window should be opened automatically after running this command and in it open the FOE world for which you would like to create MMR table. Once game is done loading
 
 5. In another terminal run python script:
 ```
