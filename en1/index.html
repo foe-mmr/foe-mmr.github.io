@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EN 1 MMR</title>
+	<script
+		src="https://code.jquery.com/jquery-3.4.1.min.js"
+  		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  		crossorigin="anonymous"></script>
+	<style>
+		table {
+		  border-collapse: collapse;
+		}
+
+		table, th, td {
+		  border: 1px solid black;
+		}
+
+		td {
+			padding: 5px;
+		}
+
+		.top th {
+			background: black;
+			color: white;
+			padding: 10px;
+		}
+
+		.mh td {
+			background: black;
+			color: white;
+		}
+	</style>
+	<script type="text/javascript">
+		var new_mmr = [];
+		var items = [];
+		
+		$.getJSON( "mmr_data.json", function( data ) {
+			var history = [];
+			var data = $.map(data, function(value, index) { return [value]; });
+
+			data.sort(function(a, b){
+			    return b.MMR - a.MMR;
+			});
+
+			new_mmr = data;
+
+			/*
+			for(var i=1; ; i++) {
+				console.log("history/"+i+".json");
+			    $.ajax({
+			      "async"   : false,
+			      "method"  : "get",
+			      "url"     : "history/"+i+".json",
+			    }).done(function(data) {
+
+			    	console.log(data);
+
+			    }).fail(function() {
+			      stop = true;
+			    });
+
+			    if(stop) {
+			      break;
+			    }
+			}
+
+			*/
+
+			$.each( new_mmr, function( key, val ) {
+				if(val.MMR > 0) {
+					var tr_class = "";
+					if(val._id == "11468") {
+						tr_class = "mh";
+					}
+					items.push("<tr class='"+tr_class+"'><td>" + val.MMR + "</td><td>" + val.name +"</td></tr>");
+				}
+			});
+			 
+
+			$( "<tbody/>", {
+				html: items.join( "" )
+			}).appendTo( "table" );
+		});
+			
+	</script>
+
+</head>
+<body>
+	<h1>EN1 MMR Table</h1>
+	<h3>Created by 101010</h3>
+	<h5><a href="https://github.com/foe-mmr/foe-mmr.github.io/blob/master/README.md">Creating your own MMR table</a></h5>
+
+	<table>
+		<thead>
+			<tr class="top">
+				<th>MMR</th>
+				<th>Guild</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</body>
+
+</html>
