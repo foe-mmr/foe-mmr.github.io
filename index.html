@@ -1,106 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>EN 11 MMR</title>
-	<script
-		src="https://code.jquery.com/jquery-3.4.1.min.js"
-  		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  		crossorigin="anonymous"></script>
-	<style>
-		table {
-		  border-collapse: collapse;
-		}
+<html><head>
+<title>harijs.me</title>
+<style type="text/css">
+	html {
+		min-width: 100%;
+	}
 
-		table, th, td {
-		  border: 1px solid black;
-		}
+	body {
+		margin: 0;
+		padding: 0;
+		min-width: 100%;
+		height: 100%;
+	}
 
-		td {
-			padding: 5px;
-		}
-
-		.top th {
-			background: black;
-			color: white;
-			padding: 10px;
-		}
-
-		.mh td {
-			background: black;
-			color: white;
-		}
-	</style>
-	<script type="text/javascript">
-		var new_mmr = [];
-		var items = [];
-		
-		//$.getJSON( "mmr_data.json", function( data ) {
-		$.getJSON( "https://raw.githubusercontent.com/foe-mmr/foe-mmr.github.io/master/mmr_data.json?v=1", function( data ) {
-			var history = [];
-			var data = $.map(data, function(value, index) { return [value]; });
-
-			data.sort(function(a, b){
-			    return b.MMR - a.MMR;
-			});
-
-			new_mmr = data;
-
-			/*
-			for(var i=1; ; i++) {
-				console.log("history/"+i+".json");
-			    $.ajax({
-			      "async"   : false,
-			      "method"  : "get",
-			      "url"     : "history/"+i+".json",
-			    }).done(function(data) {
-
-			    	console.log(data);
-
-			    }).fail(function() {
-			      stop = true;
-			    });
-
-			    if(stop) {
-			      break;
-			    }
-			}
-
-			*/
-
-			$.each( new_mmr, function( key, val ) {
-				if(val.MMR > 0) {
-					var tr_class = "";
-					if(val._id == "11468") {
-						tr_class = "mh";
-					}
-					items.push("<tr class='"+tr_class+"'><td>" + val.MMR + "</td><td>" + val.name +"</td></tr>");
-				}
-			});
-			 
-
-			$( "<tbody/>", {
-				html: items.join( "" )
-			}).appendTo( "table" );
-		});
-			
-	</script>
-
+	#om {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: url(/om.svg) no-repeat center center;
+	}
+</style>
 </head>
+
 <body>
-	<h1>EN11 MMR Table</h1>
-	<h3>Created by 101010</h3>
-	<h5><a href="https://github.com/foe-mmr/foe-mmr.github.io/blob/master/README.md">Creating your own MMR table</a></h5>
+	<div id="om">
+    <div class="text" style="
+    text-align: center;
+">
+		<p>From falsehood lead me to truth,</p>
+		<p>From darkness lead me to the light,</p>
+		<p>From death lead me to immortality.</p>
+	</div>
+</div>
 
-	<table>
-		<thead>
-			<tr class="top">
-				<th>MMR</th>
-				<th>Guild</th>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
-</body>
 
-</html>
+</body></html>
