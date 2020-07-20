@@ -34,7 +34,7 @@
 		var new_mmr = [];
 		var items = [];
 		
-		$.getJSON( "https://raw.githubusercontent.com/foe-mmr/foe-mmr.github.io/master/mmr_data.json?v=5", function( data ) {
+		$.getJSON( "https://raw.githubusercontent.com/foe-mmr/foe-mmr.github.io/master/mmr_data.json?v=6", function( data ) {
 			var history = [];
 			var data = $.map(data, function(value, index) { return [value]; });
 
@@ -69,7 +69,7 @@
 			$.each( new_mmr, function( key, val ) {
 				if(val.MMR > 0) {
 					var tr_class = "";
-					if(false && val._id == "65") {
+					if(val._id == "65") {
 						tr_class = "mh";
 					}
 					items.push("<tr class='"+tr_class+"'><td>" + val.MMR + "</td><td>" + val.name +"</td></tr>");
